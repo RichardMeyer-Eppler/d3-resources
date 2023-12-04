@@ -29,6 +29,12 @@
 
 - [Visualizations in D3 - R Pruim](https://rpruim.github.io/D3/notes/)
 
+- [An introduction to d3.js in 10 basic examples - D3.js Graph
+  Gallery](https://d3-graph-gallery.com/intro_d3js.html)
+
+- [Drawing axis in d3.js - D3.js Graph
+  Gallery](https://d3-graph-gallery.com/graph/custom_axis.html)
+
 ## Courses
 
 - [Fullstack D3 and Data
