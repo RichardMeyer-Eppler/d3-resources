@@ -43,9 +43,28 @@ knitr::opts_chunk$set(
 
 -   [Drawing axis in d3.js - D3.js Graph Gallery](https://d3-graph-gallery.com/graph/custom_axis.html)
 
+-   [How to "learn D3" in 2023 - Connor Rothschild](https://www.connorrothschild.com/viz)
+
+-   [Learn D3 - Mike Bostock](https://observablehq.com/collection/@d3/learn-d3)
+
+-   [Let's Make a Bar Chart - Mike Bostock](https://observablehq.com/collection/@d3/lets-make-a-bar-chart)
+
 ## Courses
 
 -   [Fullstack D3 and Data Visualization](https://www.newline.co/fullstack-d3)
+-   Introduction to D3 Course - Paul Buffa ([Youtube Playlist](https://www.youtube.com/playlist?list=PLOHIJAFwtkEcK_mLLScnX2B-yHDjzSxuR), [Observable Notebooks](https://observablehq.com/@observablehq/introduction-to-d3-course?collection=@observablehq/introduction-to-d3-course))
+
+## Technical Basics
+
+### Data and Selection Joins
+
+-   [Thinking with Joins - Mike Bostock](https://bost.ocks.org/mike/join/)
+
+-   [Selection Join - Mike Bostock](https://observablehq.com/@d3/selection-join)
+
+### Margins
+
+-   [Margin Convention - Mike Bostock](https://observablehq.com/@d3/margin-convention)
 
 ## Other
 
@@ -68,3 +87,17 @@ knitr::opts_chunk$set(
 -   [D3.js merge() extended - small multiples - Bryony Miles](https://www.codementor.io/@milesbryony/d3-js-merge-extended-small-multiples-14efbozjk5)
 
 -   [A single d3.js V4 chart with 'small multiples' along single categorical x-axis - Carl V Lewis](https://gist.github.com/carlvlewis/8a5b1cc987217607a47bd7d4e0fffacb)
+
+-   [How to create a 'facetplot' in d3.js? - Stack Overflow](https://stackoverflow.com/questions/65499073/how-to-create-a-facetplot-in-d3-js)
+
+# Cognos Analytics
+
+## Official
+
+-   [Custom Visualizations Developer - IBM Cognos Analytics 12.0.x Documentation](https://www.ibm.com/docs/en/cognos-analytics/12.0.0?topic=developing-custom-visualizations-developer)
+
+-   [Customvis-lib IBM Github](https://github.com/IBM/ca_customvis)
+
+-   [customvis-lib API Reference](https://ibm.github.io/ca_customvis/docs/11.1.x/)
+
+-   [Custom Visualizations Developer - IBM Cognos Analytics 12.0.x Developing Manual](https://www.ibm.com/docs/en/SSEP7J_12.0.0/pdf/dg_custom_vis.pdf)
