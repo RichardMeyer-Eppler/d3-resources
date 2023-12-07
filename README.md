@@ -70,6 +70,8 @@
 ## Other
 
 - [State of Java Script 2022 Survey](https://2022.stateofjs.com/en-US)
+- [Using Observable in
+  Quarto](https://quarto.org/docs/computations/ojs.html)
 
 ## Small Multiples / Facets
 

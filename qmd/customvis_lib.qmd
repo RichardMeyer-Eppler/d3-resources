@@ -1,0 +1,247 @@
+---
+title: "Notes on using Customvis Lib"
+format:
+  html:
+    toc: true
+editor: visual
+engine: knitr
+execute:
+  eval: false
+  echo: true
+---
+
+## Vizdef
+
+### Vizdef.xml Skeleton
+
+```{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<visualizationDefinition version="3.1" xmlns="http://www.ibm.com/xmlns/prod/ba/vipr/vizBundle/vizdef.3">
+    <slots>
+    </slots>
+
+    <dataSets>
+        <dataSet>
+        </dataSet>
+    </dataSets>
+
+    <properties>
+        <group name="">
+        </group>
+    </properties>
+
+     <capabilities>
+        <decorations>
+        </decorations>
+    </capabilities>
+</visualizationDefinition>
+```
+
+## Import
+
+```{js}
+// Minimal import
+import { RenderBase, UpdateInfo } from "@businessanalytics/customvis-lib";
+
+// Extensive import
+import { RenderBase, UpdateInfo, DataPoint, Segment, Color, Properties, DataSet, FormatType, Font, Slot, Length, LengthUnit, Tuple, CatPalette } from "@businessanalytics/customvis-lib";
+
+import * as d3 from "d3";
+```
+
+## Global Variables
+
+```{js}
+// Data column indices for each Slot from the Vizdef.xml
+// https://ibm.github.io/ca_customvis/docs/11.1.x/classes/slot.html
+const CATEGORIES = 0, TYPE = 1, VALUE = 2;
+
+// Chart margins (intentionally lower case)
+const margin = { left: 15, top: 15, right: 15, bottom: 15 };
+
+// Class Names
+const VISUALIZATION_CLASS = "xx";
+const AXIS_CLASS = "xx";
+
+// Assing classes
+.attr( "class", VISUALIZATION_CLASS )
+```
+
+## Type Declarations
+
+```{js}
+// See Main.ts from Gantt chart
+type ColumnValue =
+{
+    x: number;
+    text: string;
+}
+
+type ResolveStringFn = ( _dataPoint: DataPoint ) => string;
+```
+
+## Typescript Functions
+
+-   <https://www.typescriptlang.org/docs/handbook/2/functions.html>
+
+### create
+
+```{js}
+/**
+     * Initial setup of the visualization. Called only once during creation.
+     * @param _node Visualization container node.
+     * @returns The svg node in which the visualization is rendered.
+     */
+    protected create( _node: HTMLElement ): Element
+    {
+        // Create an svg node with two text fields for value and title.
+        const svg = d3.select( _node )
+            .append( "svg" )
+            .attr( "viewBox", "0 0 100 100" )
+            .attr( "width", "100%" )
+            .attr( "height", "100%" );
+
+        // Return the svg node as the visualization root node.
+        return svg.node();
+    }
+    
+    public create( _node: HTMLElement ): Element
+    {
+        this
+            .container( _node )
+            .svgWidth( "100%" )
+            .svgHeight( "100%" );
+        return _node;
+    }
+```
+
+### update
+
+```{js}
+/**
+     * Called each time the visualization needs to update. For instance when the
+     * data has changed, the visualization is resized or one of the property values
+     * has changed.
+     * @param _info Update information (like data, node, reason etc.).
+     */
+    protected update( _info: UpdateInfo ): void
+    {
+        const data = _info.data;
+        const props = _info.props;
+        // the svg node that was created in the `create` method
+        const svg = d3.select( _info.node );
+        const rows = _info.data ? _info.data.rows : [];
+        const cats = _info.data ? _info.data.cols[ CATEGORIES ].tuples.map( _t => _t.key ) : [];
+        // From vizdef.xml: <palette name="colors" caption="$nls.property.colors" slot="series" type="cat" />
+        // Requires import CatPalette!
+        const palette = _info.props.get( "colors" ) as CatPalette;
+        
+        // If there is no data, remove all axes and elements.
+        if ( !data || !data.rows.length )
+            // No data specified, remove the image and titles.
+            svg.select( "image" ).attr( "xlink:href", "" );
+            svg.select( "text.value" ).text( "No Data" );
+            svg.select( "text.title" ).text( "" );
+        }
+        
+        const chartWidth = attrs.svgWidth - attrs.marginRight - attrs.marginLeft;
+        const chartHeight = attrs.svgHeight - attrs.marginBottom - attrs.marginTop;
+        
+       .attr( "transform", `translate(${attrs.marginLeft},${attrs.marginTop})` );
+
+    }
+```
+
+### \_updateProperties
+
+```{js}
+// Call from update function
+this._updateProperties( _info );
+
+/**
+     * Enable/disable properties based on data mapping
+     * @param _info
+     */
+    private _updateProperties( _info: UpdateInfo ): void
+    {
+
+        const isLabelMapped = _info.data.cols[ LABEL ].mapped;
+        const isShowBackgroundChecked = this.properties.get( "text.background.show" );
+        this.properties.setActive( "text.background.show", isLabelMapped );
+        this.properties.setActive( "text.background.color", isLabelMapped && isShowBackgroundChecked );
+        this.properties.setActive( "text.background.opacity", isLabelMapped && isShowBackgroundChecked );
+        this.properties.setActive( "text.color", isLabelMapped );
+        this.properties.setActive( "text.font", isLabelMapped );
+    }
+```
+
+### hitTest
+
+```{js}
+    protected hitTest( _elem: Element | null ): DataPoint | Segment | null
+    {
+        // Retrieve the d3 datum of the element that was hit.
+        const elem = d3.select<Element, any>( _elem );
+        const node = elem.empty() ? null : elem.datum();
+        if ( node instanceof Object && "segment" in node )
+            return node.segment;
+        return node;
+    }
+```
+
+### applyFont
+
+```{verbatim font-definition}
+// Font definition in Vizdef.xml
+<font name="axis.label.font" defaultValue="0.75em 'IBM Plex Sans'" caption="Label font" tags="$label-02" />
+<font name="KPI-label-font" caption="Font" defaultValue="4px IBM Plex Sans" />
+
+```
+
+```{js applyFont}
+
+function applyFont( _selection: any, _font: Font ): void
+{
+    _selection
+        .style( "font-size", _font.size ? _font.size.toString() : null )
+        .style( "font-family", _font.family ? _font.family.toString() : null )
+        .style( "font-style", _font.style ? _font.style.toString() : null )
+        .style( "font-weight", _font.weight ? _font.weight.toString() : null );
+}
+```
+
+```{js applyFontUsage}
+// import
+import { Font } from "@businessanalytics/customvis-lib";
+
+// in update function
+const props = _info.props;
+const axisLabelFont: Font = props.get( "axis.label.font" );
+
+// in selection
+.call( applyFont, axisLabelFont )
+```
+
+### getColor (with Transparency)
+
+```{js}
+// from overlaybar
+const getColor = function( _row: DataPoint, _alpha: number ): string
+  {
+      const tuple = _row.tuple( palette.slot );
+      const color = palette.getColor( tuple );
+      return Color.fromObject( { ...color, a: _alpha } ).toString();
+  };
+```
+
+## Examples
+
+-   Good introductions:
+
+    -   Overlaybar
+
+    -   Gas Gauge
+
+-   x-Axis position based on property (gantt chart)
+
+-   
