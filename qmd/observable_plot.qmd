@@ -1,0 +1,114 @@
+---
+title: "Observable Plot"
+format: 
+  html:
+    echo: FALSE
+    code-tools: TRUE
+editor: visual
+---
+
+```{r}
+new_path <- here::here(
+    "qmd",
+    "stocks.csv"
+  )
+```
+
+```{r, eval = FALSE}
+# https://observablehq.com/@observablehq/plot-labeled-multi-line-chart
+# https://quarto.org/docs/interactive/ojs/libraries.html
+
+fs::file_copy(
+  path = r'(D:\Data\Downloads\stocks.csv)',
+  new_path = here::here(
+    "qmd",
+    "stocks.csv"
+  )
+)
+```
+
+```{r flare-with-r}
+stocks_with_r <- readr::read_csv(
+  file = new_path
+)
+
+## All of these approaches did not work
+
+# json <- jsonlite::toJSON(
+#   stocks_with_r
+# )
+# 
+# stocks_with_r_array <- stocks_with_r |> 
+#   dplyr::mutate(
+#     id = dplyr::row_number(),
+#     .before = dplyr::everything()
+#   ) |> 
+#   dplyr::rowwise() |> 
+#   tidyr::nest(
+#     .by = id,
+#     .key = "array"
+#   ) |> 
+#   dplyr::pull(
+#     array
+#   )
+
+# https://github.com/tidyverse/purrr/issues/803
+# Date column gets borked!
+# stocks_with_r_list <- purrr::transpose(
+#   stocks_with_r |> 
+#     dplyr::select(everything()
+#   )
+# )
+
+# Also not working you dumb shit!
+stocks_with_r_list <- purrr::pmap(
+  test2,
+  list
+)
+
+test2 <- flatten(test)
+test <- list(
+  colnames(stocks_with_r) |> set_names()
+)
+
+ojs_define(stocks = stocks_with_r_list)
+```
+
+
+```{ojs}
+Plot.rectY({length: 10000}, Plot.binX({y: "count"}, {x: d3.randomNormal()})).plot()
+```
+
+```{ojs}
+// https://observablehq.com/@observablehq/plot-labeled-multi-line-chart
+
+import {aapl} from "@observablehq/plot-labeled-multi-line-chart"
+
+stocks
+```
+
+::: panel-tabset
+
+## Plot
+
+```{ojs plot}
+
+Plot.plot({
+  style: "overflow: visible;",
+  y: {grid: true},
+  marks: [
+    Plot.ruleY([0]),
+    Plot.lineY(stocks, {x: "Date", y: "Close", stroke: "Symbol"}),
+    Plot.text(stocks, Plot.selectLast({x: "Date", y: "Close", z: "Symbol", text: "Symbol", textAnchor: "start", dx: 3}))
+  ]
+})
+
+```
+
+## Data
+
+```{ojs}
+Inputs.table(stocks)
+```
+
+:::
