@@ -75,6 +75,10 @@
 
 ## Small Multiples / Facets
 
+- [Facets in Observable
+  Plot](https://observablehq.com/plot/features/facets) - Observable Plot
+  Documentation
+
 - [What is the best way to create small multiples in d3.js v6? - Stack
   Overflow](https://stackoverflow.com/questions/66230918/what-is-the-best-way-to-create-small-multiples-in-d3-js-v6)
 
@@ -119,3 +123,9 @@
 - [Custom Visualizations Developer - IBM Cognos Analytics 12.0.x
   Developing
   Manual](https://www.ibm.com/docs/en/SSEP7J_12.0.0/pdf/dg_custom_vis.pdf)
+
+- [IBM Accelerator Catalog](https://accelerator.ca.analytics.ibm.com/)
+
+  - Select “Products and Services” -\> “IBM Cognos Analytics”
+
+  - Select “Accelerator Type” -\> “Visualization”

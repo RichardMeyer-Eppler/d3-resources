@@ -73,6 +73,8 @@ knitr::opts_chunk$set(
 
 ## Small Multiples / Facets
 
+-   [Facets in Observable Plot](https://observablehq.com/plot/features/facets) - Observable Plot Documentation
+
 -   [What is the best way to create small multiples in d3.js v6? - Stack Overflow](https://stackoverflow.com/questions/66230918/what-is-the-best-way-to-create-small-multiples-in-d3-js-v6)
 
 -   [Small multiple for line chart](https://d3-graph-gallery.com/graph/line_smallmultiple.html) - D3.js Graph Gallery
@@ -102,3 +104,9 @@ knitr::opts_chunk$set(
 -   [customvis-lib API Reference](https://ibm.github.io/ca_customvis/docs/11.1.x/)
 
 -   [Custom Visualizations Developer - IBM Cognos Analytics 12.0.x Developing Manual](https://www.ibm.com/docs/en/SSEP7J_12.0.0/pdf/dg_custom_vis.pdf)
+
+-   [IBM Accelerator Catalog](https://accelerator.ca.analytics.ibm.com/)
+
+    -   Select "Products and Services" -\> "IBM Cognos Analytics"
+
+    -   Select "Accelerator Type" -\> "Visualization"
