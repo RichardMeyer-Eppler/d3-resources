@@ -79,6 +79,12 @@
   Plot](https://observablehq.com/plot/features/facets) - Observable Plot
   Documentation
 
+- [Local Variables - Mike
+  Bostock](https://gist.github.com/mbostock/e1192fe405703d8321a5187350910e08)
+
+- [Small Multiples Examples - Mike
+  Bostock](https://gist.github.com/mbostock/1157787)
+
 - [What is the best way to create small multiples in d3.js v6? - Stack
   Overflow](https://stackoverflow.com/questions/66230918/what-is-the-best-way-to-create-small-multiples-in-d3-js-v6)
 
